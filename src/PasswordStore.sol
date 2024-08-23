@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.18;
+pragma solidity 0.8.18; // q is the correct version?
 
 /*
  * @author not-so-secure-dev
@@ -11,6 +11,7 @@ contract PasswordStore {
     error PasswordStore__NotOwner();
 
     address private s_owner;
+    // @audit this is not a secure place to store password.
     string private s_password;
 
     event SetNetPassword();
@@ -23,6 +24,8 @@ contract PasswordStore {
      * @notice This function allows only the owner to set a new password.
      * @param newPassword The new password to set.
      */
+    // @audit non owner are allowed to setPassword
+    // missing access control
     function setPassword(string memory newPassword) external {
         s_password = newPassword;
         emit SetNetPassword();
@@ -32,6 +35,7 @@ contract PasswordStore {
      * @notice This allows only the owner to retrieve the password.
      * @param newPassword The new password to set.
      */
+    // @audit no newPassword parameter set.
     function getPassword() external view returns (string memory) {
         if (msg.sender != s_owner) {
             revert PasswordStore__NotOwner();
