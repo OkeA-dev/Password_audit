@@ -1,4 +1,4 @@
-### [H-#] Password stored on-chain is visable by anyone, not matter the solidity visibility variable
+### [H-1] Password stored on-chain is visable by anyone, not matter the solidity visibility variable
 
 **Description:** All data stored on-chain is visible by anyone, and it can be directly retrieved for the EVM storage. The 
 `passwordStore::s_password` is intended to be a private variable, and it should only be accessed through the 
@@ -46,7 +46,7 @@ myPassword
 **Recommended Mitigation:** Due to this, the overall architecture of the contract should be rethought. One could encrypt the password off-chain, and then store the encrypted password on-chain. This would require the user to remember another password off-chain to decrypt the password. However, you'd also likely want to remove the view function as you wouldn't want the user to accidentally send a transaction with the password that decrypts your password. 
 
 
-### [H-#] `PasswordStore::setPassword` has no access control, meaning non-owner could change the password.
+### [H-2] `PasswordStore::setPassword` has no access control, meaning non-owner could change the password.
 
 **Description:** The `Password::setpassword` function is set to be an external function, however the natspec of this function and the overall purpose of the smart contract is that `This function allow only the owner to set new password`.
 
@@ -88,4 +88,16 @@ myPassword
     if(msg.sender != s_owner) {
         revert PasswordStore__NotOwner();
     }
+```
+
+## [S-#] The `PasswordStore::getPassword` natspec indicate a parameter that does not exist, which makes the natspec incorrect.
+
+**Description** The `PasswordStore::getPassword` function signature is `getPassword()`, whereas the natspec indicate
+ that should be `getPassword(string)`.
+
+**Impact:** The natspec is incorrect.
+
+**Recommended Mitigation** Remove the incorrect natspec line.
+```diff
+- * @param newPassword The new password to set.
 ```
