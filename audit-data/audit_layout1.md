@@ -11,4 +11,5 @@ Impact: The password is not private.
 Proof of Concept: The below test case shows how anyone could read the password directly from the blockchain. We use the 
 foundry-cast tools to directly read from the storage of the contract, without being the owner.
 
+
 Recommended Mitigation:
