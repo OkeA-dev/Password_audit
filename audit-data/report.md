@@ -198,3 +198,13 @@ myPassword
 
 ## Informational
 ### [S-#] The `PasswordStore::getPassword` natspec indicate a parameter that does not exist, which makes the natspec incorrect.
+
+
+**Description:** The natspec indicate that `getPassword` function should take in a `newpassword` as parament, but the function doesn't hold any parameter.
+
+**Impact:** It does not have any impact though.
+
+**Recommended Mitigation** The following comment should be removed from `line 36`
+```diff
+- * @param newPassword The new password to set.
+```
